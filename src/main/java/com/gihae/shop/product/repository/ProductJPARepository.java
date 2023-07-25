@@ -1,4 +1,6 @@
 package com.gihae.shop.product.repository;
 
-public interface ProductJPARepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductJPARepository extends JpaRepository<Product, Long> {
 }
