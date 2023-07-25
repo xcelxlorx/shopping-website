@@ -14,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String productName;
@@ -28,7 +28,7 @@ public class Product {
     private int price;
 
     @Builder
-    public Product(int id, String productName, String description, String image, int price) {
+    public Product(Long id, String productName, String description, String image, int price) {
         this.id = id;
         this.productName = productName;
         this.description = description;

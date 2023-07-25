@@ -20,7 +20,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
@@ -35,7 +35,7 @@ public class OrderItem {
     private int price;
 
     @Builder
-    public OrderItem(int id, Option option, Order order, int quantity, int price) {
+    public OrderItem(Long id, Option option, Order order, int quantity, int price) {
         this.id = id;
         this.option = option;
         this.order = order;

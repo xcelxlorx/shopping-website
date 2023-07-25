@@ -18,13 +18,13 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Builder
-    public Order(int id, User user) {
+    public Order(Long id, User user) {
         this.id = id;
         this.user = user;
     }

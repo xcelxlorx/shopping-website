@@ -18,7 +18,7 @@ public class Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     private Product product;
@@ -29,7 +29,7 @@ public class Option {
     private int price;
 
     @Builder
-    public Option(int id, Product product, String optionName, int price) {
+    public Option(Long id, Product product, String optionName, int price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;

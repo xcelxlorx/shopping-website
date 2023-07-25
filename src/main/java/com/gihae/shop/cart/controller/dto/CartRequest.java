@@ -12,7 +12,7 @@ public class CartRequest {
     public static class SaveDTO{
 
         @NotNull(message = "옵션 아이디는 필수 입력 값입니다.")
-        private int optionId;
+        private Long optionId;
 
         @NotNull(message = "수량은 필수 입력 값입니다.")
         @Min(value = 1, message = "수량은 최소 1 이상 이어야 합니다.")
@@ -24,7 +24,7 @@ public class CartRequest {
     public static class UpdateDTO{
 
         @NotNull(message = "장바구니 아이디는 필수 입력 값입니다.")
-        private int cardId;
+        private Long cardId;
 
         @NotNull(message = "수량은 필수 입력 값입니다.")
         @Min(value = 1, message = "수량은 최소 1 이상 이어야 합니다.")
