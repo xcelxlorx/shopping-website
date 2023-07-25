@@ -1,5 +1,7 @@
 package com.gihae.shop.cart.service;
 
+import com.gihae.shop._core.exception.Exception400;
+import com.gihae.shop._core.exception.Exception404;
 import com.gihae.shop.cart.controller.dto.CartRequest;
 import com.gihae.shop.cart.controller.dto.CartResponse;
 import com.gihae.shop.cart.repository.Cart;
@@ -26,14 +28,16 @@ public class CartService {
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser){
 
+        //1. requestDTOs에 동일한 옵션 아이디가 존재할 경우
         Set<Long> optionIds = new HashSet<>();
         boolean isDuplicated = requestDTOs.stream()
                 .map(CartRequest.SaveDTO::getOptionId)
                 .anyMatch(optionId -> !optionIds.add(optionId));
         if(isDuplicated){
-            //예외 처리
+            throw new Exception400("입력 중 동일한 옵션 아이디가 존재합니다.");
         }
 
+        //2. 카드가 존재할 경우 update, 존재하지 않을 경우 save
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             Long optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
@@ -44,7 +48,9 @@ public class CartService {
                 cart.update(quantity, cart.getOption().getPrice() * quantity);
                 cartJPARepository.update(cart);
             }else{
-                Option option = optionJPARepository.findById(optionId).orElseThrow();
+                Option option = optionJPARepository.findById(optionId).orElseThrow(
+                        () -> new Exception404("해당 옵션을 찾을 수 없습니다.")
+                );
                 int price = option.getPrice() * quantity;
                 Cart cart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
                 cartJPARepository.save(cart);
@@ -61,23 +67,28 @@ public class CartService {
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user){
         List<Cart> carts = cartJPARepository.findByUserId(user.getId());
 
+        //1. 사용자 장바구니가 비어있을 경우
         if(carts.isEmpty()){
-            //예외처리
+            throw new Exception400("사용자의 장바구니가 비어있습니다.");
         }
 
+        //2. requestDTOs에 동일한 장바구니 아이디가 존재할 경우
         Set<Long> cartIds = new HashSet<>();
         boolean isDuplicated = requestDTOs.stream()
                 .map(CartRequest.UpdateDTO::getCardId)
                 .anyMatch(cartId -> !cartIds.add(cartId));
         if(isDuplicated){
-            //예외 처리
+            throw new Exception400("입력 중 동일한 장바구니 아이디가 존재합니다.");
         }
 
+        //3. 사용자 장바구니에 있는 cartId가 들어온 경우 update
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             Long cartId = requestDTO.getCardId();
             int quantity = requestDTO.getQuantity();
 
-            Cart cart = carts.stream().filter(c -> c.getId().equals(cartId)).findFirst().orElseThrow();
+            Cart cart = carts.stream().filter(c -> c.getId().equals(cartId)).findFirst().orElseThrow(
+                    () -> new Exception404("해당 카트를 찾을 수 없습니다.")
+            );
             cart.update(quantity, cart.getOption().getPrice() * quantity);
             cartJPARepository.update(cart);
         }
