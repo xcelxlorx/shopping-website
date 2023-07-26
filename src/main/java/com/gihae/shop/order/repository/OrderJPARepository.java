@@ -1,4 +1,6 @@
 package com.gihae.shop.order.repository;
 
-public interface OrderJPARepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderJPARepository extends JpaRepository<Order, Long> {
 }

@@ -1,4 +1,4 @@
-package com.gihae.shop.orderItem.repository;
+package com.gihae.shop.orderitem.repository;
 
 import com.gihae.shop.option.repository.Option;
 import com.gihae.shop.order.repository.Order;

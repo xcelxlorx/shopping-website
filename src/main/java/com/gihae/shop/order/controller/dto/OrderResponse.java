@@ -1,7 +1,7 @@
 package com.gihae.shop.order.controller.dto;
 
 import com.gihae.shop.order.repository.Order;
-import com.gihae.shop.orderItem.repository.OrderItem;
+import com.gihae.shop.orderitem.repository.OrderItem;
 import com.gihae.shop.product.repository.Product;
 import lombok.Getter;
 
