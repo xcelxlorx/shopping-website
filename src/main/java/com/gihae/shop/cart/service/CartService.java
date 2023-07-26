@@ -1,7 +1,7 @@
 package com.gihae.shop.cart.service;
 
-import com.gihae.shop._core.exception.Exception400;
-import com.gihae.shop._core.exception.Exception404;
+import com.gihae.shop._core.errors.exception.Exception400;
+import com.gihae.shop._core.errors.exception.Exception404;
 import com.gihae.shop.cart.controller.dto.CartRequest;
 import com.gihae.shop.cart.controller.dto.CartResponse;
 import com.gihae.shop.cart.repository.Cart;
@@ -26,7 +26,7 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
 
     @Transactional
-    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser){
+    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User user){
 
         //1. requestDTOs에 동일한 옵션 아이디가 존재할 경우
         Set<Long> optionIds = new HashSet<>();
@@ -41,7 +41,7 @@ public class CartService {
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             Long optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
-            Optional<Cart> optionalCart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
+            Optional<Cart> optionalCart = cartJPARepository.findByOptionIdAndUserId(optionId, user.getId());
 
             if(optionalCart.isPresent()){
                 Cart cart = optionalCart.get();
@@ -52,7 +52,7 @@ public class CartService {
                         () -> new Exception404("해당 옵션을 찾을 수 없습니다.")
                 );
                 int price = option.getPrice() * quantity;
-                Cart cart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
+                Cart cart = Cart.builder().user(user).option(option).quantity(quantity).price(price).build();
                 cartJPARepository.save(cart);
             }
         }

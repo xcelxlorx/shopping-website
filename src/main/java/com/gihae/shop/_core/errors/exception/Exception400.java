@@ -1,4 +1,4 @@
-package com.gihae.shop._core.exception;
+package com.gihae.shop._core.errors.exception;
 
 import com.gihae.shop._core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;

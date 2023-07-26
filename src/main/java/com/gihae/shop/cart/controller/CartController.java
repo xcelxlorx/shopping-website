@@ -1,6 +1,6 @@
 package com.gihae.shop.cart.controller;
 
-import com.gihae.shop._core.exception.Exception400;
+import com.gihae.shop._core.errors.exception.Exception400;
 import com.gihae.shop._core.security.CustomUserDetails;
 import com.gihae.shop._core.utils.ApiUtils;
 import com.gihae.shop.cart.controller.dto.CartRequest;

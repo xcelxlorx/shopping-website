@@ -1,5 +1,7 @@
-package com.gihae.shop._core.exception;
+package com.gihae.shop._core.errors;
 
+import com.gihae.shop._core.errors.exception.*;
+import com.gihae.shop._core.exception.*;
 import com.gihae.shop._core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
