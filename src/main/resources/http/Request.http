@@ -1,0 +1,72 @@
+### POST - 회원가입
+POST http://localhost:8080/auth/join
+Content-Type: application/json
+
+{
+    "username":"gihae0805",
+    "email":"gihae0805@gmail.com",
+    "password":"gihae1234!"
+}
+
+### POST - 로그인
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email":"gihae0805@gmail.com",
+    "password":"gihae1234!"
+}
+
+### POST - 이메일 중복 확인
+POST http://localhost:8080/auth/check-email
+Content-Type: application/json
+
+{
+    "email":"gihae0805@gmail.com"
+}
+
+### GET - 전체 상품 조회
+GET http://localhost:8080/products
+
+
+### GET - 상세 상품 조회
+GET http://localhost:8080/products/1
+
+### POST - 장바구니 담기
+POST http://localhost:8080/carts
+Content-Type: application/json
+
+[
+  {
+    "optionId": 1,
+    "quantity": 5
+  },
+  {
+    "optionId": 1,
+    "quantity": 5
+  }
+]
+
+### GET - 장바구니 조회
+GET http://localhost:8080/carts
+
+### PATCH - 장바구니 업데이트
+PATCH http://localhost:8080/carts
+Content-Type: application/json
+
+[
+  {
+    "cartId":1,
+    "quantity":10
+  },
+  {
+    "cartId":2,
+    "quantity":10
+  }
+]
+
+### POST - 주문 생성
+POST http://localhost:8080/orders
+
+### GET - 주문 조회
+GET http://localhost:8080/orders/1
