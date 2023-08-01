@@ -1,13 +1,22 @@
 package com.gihae.shop._core.errors;
 
 import com.gihae.shop._core.errors.exception.*;
-import com.gihae.shop._core.exception.*;
 import com.gihae.shop._core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
+@RestControllerAdvice
 public class GlobalControllerAdvice {
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleValidationException(ConstraintViolationException e){
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiResult, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e){
