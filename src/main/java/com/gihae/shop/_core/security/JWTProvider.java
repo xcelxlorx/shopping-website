@@ -3,7 +3,7 @@ package com.gihae.shop._core.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.gihae.shop.user.repository.User;
+import com.gihae.shop.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,7 +20,7 @@ public class JWTProvider {
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
-                .withClaim("role", user.getRoles())
+                .withClaim("role", user.getRole())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwt;
     }

@@ -1,7 +1,7 @@
 package com.gihae.shop._core.security;
 
-import com.gihae.shop.user.repository.User;
-import com.gihae.shop.user.repository.UserJPARepository;
+import com.gihae.shop.domain.User;
+import com.gihae.shop.repository.UserJPARepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

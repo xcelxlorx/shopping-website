@@ -1,8 +1,6 @@
 package com.gihae.shop._core.security;
 
-import com.gihae.shop.user.repository.User;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import com.gihae.shop.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,15 +9,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Getter
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-
-    private final User user;
+public record CustomUserDetails(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.gihae.shop._core.security;
 
+import com.gihae.shop._core.errors.exception.Exception401;
+import com.gihae.shop._core.errors.exception.Exception403;
+import com.gihae.shop._core.utils.FilterResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,11 +24,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
     }
 
     public class CustiomSecurityFilterManager extends AbstractHttpConfigurer<CustiomSecurityFilterManager, HttpSecurity>{
@@ -47,14 +44,12 @@ public class SecurityConfig {
         http.formLogin().disable();
         http.httpBasic().disable();
         http.apply(new CustiomSecurityFilterManager());
-        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            log.warn("accessed by an unauthenticated user : " + authException.getMessage());
-        });
-        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            log.warn("accessed by an unauthorized user : " + accessDeniedException.getMessage());
-        });
+        http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
+                FilterResponseUtils.unAuthorized(response, new Exception401("accessed by an unauthenticated user")));
+        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) ->
+                FilterResponseUtils.forbidden(response, new Exception403("accessed by an unauthorized user")));
         http.authorizeRequests(
-                authorize -> authorize.antMatchers("/carts/**", "/options/**", "/orders/**")
+                authorize -> authorize.antMatchers("/carts/**", "/orders/**", "/users/**")
                         .authenticated()
                         .antMatchers("/admin/**")
                         .access("hasRole('ADMIN')")

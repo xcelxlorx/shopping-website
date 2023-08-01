@@ -3,10 +3,11 @@ package com.gihae.shop._core.security;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.gihae.shop.user.repository.User;
+import com.gihae.shop.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -40,12 +41,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
             User user = User.builder().id(id).role(role).build();
             CustomUserDetails userDetails = new CustomUserDetails(user);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userDetails,
                     userDetails.getPassword(),
                     userDetails.getAuthorities()
             );
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("debug: create authentication object");
         }catch(SignatureVerificationException e){
             log.error("token validation failed");
