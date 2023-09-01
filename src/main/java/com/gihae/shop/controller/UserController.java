@@ -7,7 +7,6 @@ import com.gihae.shop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/email-check")
-    public ResponseEntity<?> check(@RequestBody @Valid UserRequest.CheckEmailETO requestDTO, Errors errors){
+    public ResponseEntity<?> check(@RequestBody @Valid UserRequest.CheckEmailDTO requestDTO, Errors errors){
         userService.checkEmail(requestDTO.getEmail());
         return ResponseEntity.ok(ApiUtils.success(null));
     }

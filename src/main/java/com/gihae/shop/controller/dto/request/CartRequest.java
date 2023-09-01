@@ -1,6 +1,7 @@
 package com.gihae.shop.controller.dto.request;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class CartRequest {
 
     @Getter
+    @Setter
     public static class SaveDTO{
 
         @NotNull(message = "옵션 아이디는 필수 입력 값입니다.")
@@ -21,6 +23,7 @@ public class CartRequest {
     }
 
     @Getter
+    @Setter
     public static class UpdateDTO{
 
         @NotNull(message = "장바구니 아이디는 필수 입력 값입니다.")

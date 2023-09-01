@@ -52,7 +52,8 @@ public class UserRequest {
     }
 
     @Getter
-    public static class CheckEmailETO{
+    @Setter
+    public static class CheckEmailDTO {
 
         @NotEmpty
         @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
@@ -60,6 +61,7 @@ public class UserRequest {
     }
 
     @Getter
+    @Setter
     public static class UpdatePasswordDTO{
 
         @NotEmpty
