@@ -1,10 +1,10 @@
-package com.gihae.shoppingwebsite;
+package com.gihae.shop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShoppingWebsiteApplicationTests {
+class ShopApplicationTests {
 
 	@Test
 	void contextLoads() {
