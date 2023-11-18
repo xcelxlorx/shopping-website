@@ -1,5 +1,3 @@
-use `shop`;
-
 INSERT INTO `user_tb` (`id`,`email`,`password`,`username`, `role`) VALUES ('1', 'admin@gmail.com', '{bcrypt}$2a$10$XqKYFkLAkj5o3995.r1Js.pCZsifZx6Nxwi1lqHxJqhIxvte6ngBq', 'admin', 'ROLE_ADMIN');
 INSERT INTO `user_tb` (`id`,`email`,`password`,`username`, `role`) VALUES ('2', 'xcelxlorx@gmail.com', '{bcrypt}$2a$10$XqKYFkLAkj5o3995.r1Js.pCZsifZx6Nxwi1lqHxJqhIxvte6ngBq', 'xcelxlorx', 'ROLE_USER');
 
