@@ -6,10 +6,10 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?autoReconnect=true&createDatabaseIfNotExist=true
-    username: root
-    password: Gh124578@
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:shop
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: create
