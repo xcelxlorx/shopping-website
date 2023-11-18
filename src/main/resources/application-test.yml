@@ -17,7 +17,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    database: mysql
     defer-datasource-initialization: true
 file:
   path: ./images/
