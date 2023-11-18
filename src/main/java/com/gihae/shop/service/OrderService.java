@@ -3,12 +3,12 @@ package com.gihae.shop.service;
 import com.gihae.shop._core.errors.exception.Exception400;
 import com.gihae.shop._core.errors.exception.Exception404;
 import com.gihae.shop.domain.Cart;
-import com.gihae.shop.repository.CartJPARepository;
+import com.gihae.shop.repository.CartRepository;
 import com.gihae.shop.controller.dto.response.OrderResponse;
 import com.gihae.shop.domain.Order;
-import com.gihae.shop.repository.OrderJPARepository;
+import com.gihae.shop.repository.OrderItemRepository;
+import com.gihae.shop.repository.OrderRepository;
 import com.gihae.shop.domain.OrderItem;
-import com.gihae.shop.repository.OrderItemJPARepository;
 import com.gihae.shop.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    private final OrderJPARepository orderJPARepository;
-    private final OrderItemJPARepository orderItemJPARepository;
-    private final CartJPARepository cartJPARepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final CartRepository cartRepository;
 
     @Transactional
     public OrderResponse.FindByIdDTO save(User user){
-        List<Cart> carts = cartJPARepository.findByUserId(user.getId());
+        List<Cart> carts = cartRepository.findByUserId(user.getId());
 
         //1. 사용자 장바구니가 비어있을 경우
         if(carts.isEmpty()){
@@ -35,7 +35,7 @@ public class OrderService {
         }
 
         Order order = Order.builder().user(user).build();
-        orderJPARepository.save(order);
+        orderRepository.save(order);
         for (Cart cart : carts) {
             OrderItem orderItem = OrderItem.builder()
                     .option(cart.getOption())
@@ -43,24 +43,24 @@ public class OrderService {
                     .quantity(cart.getQuantity())
                     .price(cart.getPrice())
                     .build();
-            orderItemJPARepository.save(orderItem);
+            orderItemRepository.save(orderItem);
         }
 
-        Order findOrder = orderJPARepository.findById(order.getId()).orElseThrow(
+        Order findOrder = orderRepository.findById(order.getId()).orElseThrow(
                 () -> new Exception404("주문을 찾을 수 없습니다. : " + order.getId())
         );
 
-        List<OrderItem> orderItems = orderItemJPARepository.findByOrderId(findOrder.getId());
-        cartJPARepository.deleteAll();
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(findOrder.getId());
+        cartRepository.deleteAll();
 
         return new OrderResponse.FindByIdDTO(order, orderItems);
     }
 
     public OrderResponse.FindByIdDTO findById(Long id){
-        Order order = orderJPARepository.findById(id).orElseThrow(
+        Order order = orderRepository.findById(id).orElseThrow(
                 () -> new Exception400("주문을 찾을 수 없습니다. : " + id)
         );
-        List<OrderItem> orderItems = orderItemJPARepository.findByOrderId(order.getId());
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getId());
         return new OrderResponse.FindByIdDTO(order, orderItems);
     }
 }
