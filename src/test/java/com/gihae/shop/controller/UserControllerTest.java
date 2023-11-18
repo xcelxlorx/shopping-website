@@ -130,6 +130,9 @@ class UserControllerTest extends IntegrationTest {
         User user = User.builder().id(1L).role("ROLE_USER").build();
         String requestBody = om.writeValueAsString(loginDTO);
 
+        //stub
+        String jwt = JWTProvider.create(user);
+
         // when
         ResultActions result = mvc.perform(
                 post("/login")
