@@ -33,6 +33,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.auth0:java-jwt:4.0.0'
+	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
@@ -56,9 +57,8 @@ tasks.named('asciidoctor') {
 bootJar {
 	dependsOn asciidoctor
 	copy {
-		// src/docs/asciidoc == from 경로
 		from "${asciidoctor.outputDir}"
-		into 'src/main/resources/static/docs'    // /static/docs로 복사!
+		into 'src/main/resources/static/docs'
 	}
 }
 
