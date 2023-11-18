@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gihae.shop._core.util.DummyEntity;
 import com.gihae.shop.domain.Option;
 import com.gihae.shop.domain.Product;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,12 +41,6 @@ class ProductRepositoryTest extends DummyEntity {
         optionRepository.saveAll(optionDummyList(productList));
 
         em.clear();
-    }
-
-    @AfterEach
-    void clear(){
-        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 
     @Test

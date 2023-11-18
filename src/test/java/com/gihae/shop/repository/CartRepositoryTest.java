@@ -9,7 +9,6 @@ import com.gihae.shop.domain.Cart;
 import com.gihae.shop.domain.Option;
 import com.gihae.shop.domain.Product;
 import com.gihae.shop.domain.User;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,14 +64,6 @@ class CartRepositoryTest extends DummyEntity {
         cartRepository.saveAll(cartsB);
 
         em.clear();
-    }
-
-    @AfterEach
-    void clear(){
-        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 
     @Test

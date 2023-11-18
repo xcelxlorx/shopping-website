@@ -3,7 +3,6 @@ package com.gihae.shop.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gihae.shop._core.util.DummyEntity;
 import com.gihae.shop.domain.*;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Import(ObjectMapper.class)
 @DataJpaTest
 class OrderRepositoryTest extends DummyEntity {
 
@@ -41,9 +39,6 @@ class OrderRepositoryTest extends DummyEntity {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
-
-    @Autowired
-    private ObjectMapper om;
 
     @BeforeEach
     public void setUp(){
@@ -70,16 +65,6 @@ class OrderRepositoryTest extends DummyEntity {
         orderItemRepository.saveAll(itemDummyList(cartsB, orderB));
 
         em.clear();
-    }
-
-    @AfterEach
-    void clear(){
-        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 
     @Test

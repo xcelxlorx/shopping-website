@@ -25,7 +25,7 @@ class UserRepositoryTest extends DummyEntity {
 
     @Test
     @DisplayName("유저 이메일로 찾기")
-    void findByEmail_test() {
+    void findByEmail() {
         //given
         String email = "gihae@naver.com";
 
@@ -36,15 +36,15 @@ class UserRepositoryTest extends DummyEntity {
 
         //then
         assertThat(user.getId()).isEqualTo(1);
-        assertThat(user.getEmail()).isEqualTo("ssar@nate.com");
-        assertTrue(BCrypt.checkpw("meta1234!", user.getPassword()));
-        assertThat(user.getUsername()).isEqualTo("ssar");
+        assertThat(user.getEmail()).isEqualTo("gihae@naver.com");
+        assertTrue(BCrypt.checkpw("gihae1234!", user.getPassword()));
+        assertThat(user.getUsername()).isEqualTo("gihae");
         assertThat(user.getRole()).isEqualTo("ROLE_USER");
     }
 
     @Test
     @DisplayName("유저 아이디로 찾기")
-    void findById_test(){
+    void findById(){
         //given
         Long id = 1L;
 
@@ -55,9 +55,9 @@ class UserRepositoryTest extends DummyEntity {
 
         //then
         assertThat(user.getId()).isEqualTo(1);
-        assertThat(user.getEmail()).isEqualTo("ssar@nate.com");
-        assertTrue(BCrypt.checkpw("meta1234!", user.getPassword()));
-        assertThat(user.getUsername()).isEqualTo("ssar");
+        assertThat(user.getEmail()).isEqualTo("gihae@naver.com");
+        assertTrue(BCrypt.checkpw("gihae1234!", user.getPassword()));
+        assertThat(user.getUsername()).isEqualTo("gihae");
         assertThat(user.getRole()).isEqualTo("ROLE_USER");
     }
 
