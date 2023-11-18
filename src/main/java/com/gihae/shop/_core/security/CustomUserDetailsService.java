@@ -1,7 +1,7 @@
 package com.gihae.shop._core.security;
 
 import com.gihae.shop.domain.User;
-import com.gihae.shop.repository.UserJPARepository;
+import com.gihae.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +16,11 @@ import java.util.Optional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserJPARepository userJPARepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> findUser = userJPARepository.findByEmail(email);
+        Optional<User> findUser = userRepository.findByEmail(email);
 
         if (findUser.isEmpty()) {
             log.warn("login failed");

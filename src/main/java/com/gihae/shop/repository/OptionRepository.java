@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface OptionJPARepository extends JpaRepository<Option, Long> {
+public interface OptionRepository extends JpaRepository<Option, Long> {
 
     @Query("select o from Option o where o.product.id = :productId")
     List<Option> findByProductId(@Param("productId") Long productId);
